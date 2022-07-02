@@ -3,6 +3,7 @@
 #include <cmath>
 #include <functional>
 #include "../constants.hpp"
+#include "../polynomials.hpp"
 #include "couchy.hpp"
 
 namespace falsePosition {
@@ -55,7 +56,7 @@ namespace falsePosition {
 
         // Check if x is a root,
         // and if it is a root, check if it wasn't added before
-        if (std::abs(f(x)) < epsilon &&
+        if (-epsilon < f(x) < epsilon &&
             (roots.size() == 0 || std::abs(roots.back() - x) > epsilon)) {
           // Just add this root if it's different of the last one.
           roots.push_back(x);
@@ -65,7 +66,7 @@ namespace falsePosition {
     }
   }
 
-  std::vector<double> getRoots(std::vector<double>& polynomial) {
+  std::vector<double> getRoots(std::vector<double>& polynomial, bool hasZero) {
     std::vector<double> roots;
 
     const auto f = getF(polynomial);
@@ -75,6 +76,10 @@ namespace falsePosition {
     auto negativeRoots = maximumNumberOfNegativeRoots(polynomial);
     if (negativeRoots) {
       getRootsInInterval(roots, f, -upperBound, partitionSize, negativeRoots);
+    }
+
+    if (hasZero) {
+      roots.push_back(0);
     }
 
     auto positiveRoots = maximumNumberOfPositiveRoots(polynomial);

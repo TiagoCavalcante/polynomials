@@ -39,7 +39,7 @@ namespace falsePosition {
   // accompanies the term a^n.
   double biggestNonLastCoefficient(const std::vector<double>& polynomial) {
     auto biggest = std::abs(polynomial[0]);
-    for (auto i = 0; i < polynomial.size() - 1; i++) {
+    for (auto i = 0; i < polynomial.size() - 2; i++) {
       if (std::abs(polynomial[i]) > biggest) {
         biggest = std::abs(polynomial[i]);
       }

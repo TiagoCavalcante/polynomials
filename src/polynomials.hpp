@@ -5,10 +5,10 @@
 #include "constants.hpp"
 
 void simplifyPolynomial(std::vector<double>& polynomial) {
-  while (std::abs(polynomial.front()) < epsilon) {
+  while (-epsilon < polynomial.front() < epsilon) {
     polynomial.erase(polynomial.begin());
   }
-  while (std::abs(polynomial.back()) < epsilon) {
+  while (-epsilon < polynomial.back() < epsilon) {
     polynomial.erase(polynomial.end());
   }
 }
