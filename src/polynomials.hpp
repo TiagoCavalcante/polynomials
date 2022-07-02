@@ -11,11 +11,6 @@ void simplifyPolynomial(std::vector<double>& polynomial) {
   while (std::abs(polynomial.back()) < epsilon) {
     polynomial.erase(polynomial.end());
   }
-  if (polynomial.back() < 0) {
-    for (auto& coefficient : polynomial) {
-      coefficient = -coefficient;
-    }
-  }
 }
 
 std::function<double(double)> getF(std::vector<double> polynomial) {

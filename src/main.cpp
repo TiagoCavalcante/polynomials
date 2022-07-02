@@ -1,11 +1,10 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "couchy.hpp"
-#include "falsePosition.hpp"
-#include "linear.hpp"
 #include "polynomials.hpp"
-#include "quadratic.hpp"
+#include "falsePosition/falsePosition.hpp"
+#include "linear/linear.hpp"
+#include "quadratic/quadratic.hpp"
 
 int main() {
   std::vector<double> polynomial;
@@ -26,27 +25,11 @@ int main() {
   std::vector<double> roots;
 
   if (polynomial.size() == 2) {
-    getLinearRoots(polynomial, roots);
+    roots = linear::getRoots(polynomial);
   } else if (polynomial.size() == 3) {
-    getQuadraticRoots(polynomial, roots);
+    roots = quadratic::getRoots(polynomial);
   } else if (polynomial.size() > 3) {
-    const auto f = getF(polynomial);
-    const auto upperBound = bound(polynomial);
-
-    // Negatives first so it is ordered.
-    auto numberOfNegativeRoots = maximumNumberOfPositiveRoots(polynomial);
-
-    if (numberOfNegativeRoots) {
-      auto interval = std::pair{-upperBound, 0.0};
-      getRoots(f, interval, roots, numberOfNegativeRoots);
-    }
-
-    auto numberOfPositiveRoots = maximumNumberOfPositiveRoots(polynomial);
-
-    if (numberOfPositiveRoots) {
-      auto interval = std::pair{0.0, upperBound};
-      getRoots(f, interval, roots, numberOfPositiveRoots);
-    }
+    roots = falsePosition::getRoots(polynomial);
   }
 
   // Print the roots.
