@@ -26,7 +26,8 @@ namespace falsePosition {
       // If i is odd.
       // (-k)^n, where k is a positive number is -k, so instead of checking if
       // the signs are opposite we are going to check if the signs are the same
-      // as either the sign of current is negated or the sign of next is negated.
+      // as either the sign of current is negated or the sign of next is
+      // negated.
       if ((current < 0 && next < 0) || (current > 0 && next > 0)) {
         v++;
       }
@@ -56,6 +57,7 @@ namespace falsePosition {
 
   double bound(const std::vector<double>& polynomial) {
     // Cauchy's bound.
-    return 1 + biggestNonLastCoefficient(polynomial) / polynomial.back();
+    return std::abs(1 +
+                    biggestNonLastCoefficient(polynomial) / polynomial.back());
   }
 }
