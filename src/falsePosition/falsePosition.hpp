@@ -4,9 +4,18 @@
 #include <functional>
 #include "../constants.hpp"
 #include "couchy.hpp"
-#include "math.hpp"
 
 namespace falsePosition {
+  int sign(double x) {
+    if (x < 0) {
+      return -1;
+    } else if (x > 0) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   // Get x0 with the false position method
   double falsePosition(std::function<double(double)> f, double a, double b) {
     auto fa = f(a);
@@ -64,10 +73,14 @@ namespace falsePosition {
 
     // Negatives first so it is ordered.
     auto negativeRoots = maximumNumberOfNegativeRoots(polynomial);
-    auto positiveRoots = maximumNumberOfPositiveRoots(polynomial);
+    if (negativeRoots) {
+      getRootsInInterval(roots, f, -upperBound, partitionSize, negativeRoots);
+    }
 
-    getRootsInInterval(roots, f, -upperBound, partitionSize, negativeRoots);
-    getRootsInInterval(roots, f, 0, upperBound + epsilon, positiveRoots);
+    auto positiveRoots = maximumNumberOfPositiveRoots(polynomial);
+    if (positiveRoots) {
+      getRootsInInterval(roots, f, 0, upperBound + epsilon, positiveRoots);
+    }
 
     return roots;
   };

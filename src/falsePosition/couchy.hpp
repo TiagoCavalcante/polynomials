@@ -3,13 +3,14 @@
 #include <cmath>
 #include <functional>
 #include <vector>
-#include "math.hpp"
 
 namespace falsePosition {
   int variations(const std::vector<double>& polynomial) {
     int v = 0;
     for (auto i = 0; i < polynomial.size();) {
-      if (sign(polynomial[i]) != sign(polynomial[++i])) {
+      auto current = polynomial[i];
+      auto next = polynomial[++i];
+      if ((current < 0 && next > 0) || (current > 0 && next < 0)) {
         v++;
       }
     }
@@ -18,14 +19,18 @@ namespace falsePosition {
 
   // Variations of the polynomial p(-x)
   int negativeVariations(const std::vector<double>& polynomial) {
-    auto v = variations(polynomial);
-
-    // If their signs are equal, they should be different as x is negated,
-    // and the 1st term multiplies x^0.
-    if (sign(polynomial[0]) == sign(polynomial[1])) {
-      v++;
+    int v = 0;
+    for (auto i = 0; i < polynomial.size();) {
+      auto current = polynomial[i];
+      auto next = polynomial[++i];
+      // If i is odd.
+      // (-k)^n, where k is a positive number is -k, so instead of checking if
+      // the signs are opposite we are going to check if the signs are the same
+      // as either the sign of current is negated or the sign of next is negated.
+      if ((current < 0 && next < 0) || (current > 0 && next > 0)) {
+        v++;
+      }
     }
-
     return v;
   }
 
@@ -42,11 +47,11 @@ namespace falsePosition {
   }
 
   int maximumNumberOfPositiveRoots(const std::vector<double>& polynomial) {
-    return min(variations(polynomial), polynomial.size() - 1);
+    return variations(polynomial);
   }
 
   int maximumNumberOfNegativeRoots(const std::vector<double>& polynomial) {
-    return min(negativeVariations(polynomial), polynomial.size() - 1);
+    return negativeVariations(polynomial);
   }
 
   double bound(const std::vector<double>& polynomial) {
