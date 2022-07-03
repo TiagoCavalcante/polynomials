@@ -66,7 +66,8 @@ namespace falsePosition {
     }
   }
 
-  std::vector<double> getRoots(std::vector<double>& polynomial, bool hasZero) {
+  std::vector<double> getRoots(const std::vector<double>& polynomial,
+                              bool hasZero) {
     std::vector<double> roots;
 
     const auto f = getF(polynomial);
