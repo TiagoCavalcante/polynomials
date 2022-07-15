@@ -22,4 +22,4 @@ $ ./bin
 
 ## How it works?
 
-The roots are found using the linear formula ($\frac{-b}{a}$), the quadratic formula ($\frac{-b \pm \sqrt{b^2 - 4 a c}}{2 a}$), or the [false position method](https://en.wikipedia.org/wiki/Regula_falsi) over the [Cauchy's bound](https://en.wikipedia.org/wiki/Geometrical_properties_of_polynomial_roots#Lagrange's_and_Cauchy's_bounds). It can solve polynomials of any degree.
+The roots are found using the linear formula ($\dfrac{-b}{a}$), the quadratic formula ($\dfrac{-b \pm \sqrt{b^2 - 4 a c}}{2 a}$), or the [false position method](https://en.wikipedia.org/wiki/Regula_falsi) over the [Cauchy's bound](https://en.wikipedia.org/wiki/Geometrical_properties_of_polynomial_roots#Lagrange's_and_Cauchy's_bounds). It can solve polynomials of any degree.
