@@ -18,7 +18,7 @@ $ ./bin
 { -3.15452; 0.337609; 2.81691; }
 ```
 
-(note: don't forget the hidden coefficients)
+(note: don't forget the zero coefficients)
 
 ## How it works?
 

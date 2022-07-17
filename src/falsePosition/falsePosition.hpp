@@ -3,6 +3,7 @@
 #include <cmath>
 #include <functional>
 #include "../constants.hpp"
+#include "../math.hpp"
 #include "../polynomials.hpp"
 #include "couchy.hpp"
 
@@ -45,7 +46,7 @@ namespace falsePosition {
                           double a,
                           double b,
                           int remainingRoots) {
-    for (auto i = a; remainingRoots && i < b;) {
+    for (auto i = a; i < b;) {
       auto current = i;
       i += partitionSize;
 
@@ -54,13 +55,13 @@ namespace falsePosition {
       if (sign(f(current)) != sign(f(i))) {
         auto x = getRoot(f, current, i);
 
-        // Check if x is a root,
-        // and if it is a root, check if it wasn't added before
-        if (-epsilon < f(x) < epsilon &&
-            (roots.size() == 0 || std::abs(roots.back() - x) > epsilon)) {
+        // Check if x really is a root.
+        if (math::isZero(f(x))) {
           // Just add this root if it's different of the last one.
           roots.push_back(x);
           remainingRoots--;
+
+          if (!remainingRoots) break;
         }
       }
     }
@@ -74,7 +75,7 @@ namespace falsePosition {
     const auto upperBound = bound(polynomial);
 
     // Negatives first so it is ordered.
-    auto negativeRoots = maximumNumberOfNegativeRoots(polynomial);
+    auto negativeRoots = negativeVariations(polynomial);
     if (negativeRoots) {
       getRootsInInterval(roots, f, -upperBound, partitionSize, negativeRoots);
     }
@@ -83,7 +84,7 @@ namespace falsePosition {
       roots.push_back(0);
     }
 
-    auto positiveRoots = maximumNumberOfPositiveRoots(polynomial);
+    auto positiveRoots = variations(polynomial);
     if (positiveRoots) {
       getRootsInInterval(roots, f, 0, upperBound + epsilon, positiveRoots);
     }

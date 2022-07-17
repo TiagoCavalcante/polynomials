@@ -3,6 +3,7 @@
 #include <vector>
 #include "falsePosition/falsePosition.hpp"
 #include "linear/linear.hpp"
+#include "math.hpp"
 #include "polynomials.hpp"
 #include "quadratic/quadratic.hpp"
 
@@ -23,7 +24,13 @@ int main() {
   // We may "loose" the root 0 when simplifying the polynomial, e.g.:
   // 0 is a root of x² - x = 0, but isn't a root of the equivalent polynomial
   // x - 1 = 0.
-  bool hasZero = -epsilon < getF(polynomial)(0) < epsilon;
+  // If the last term is 0, 0 certainly is a root, as proved bellow:
+  //      cₙ xⁿ + ··· + c₁ x¹ + c₀ = 0
+  //   => cₙ xⁿ + ··· + c₁ x¹ = -c₀
+  //   => x¹ (cₙ xⁿ⁻¹ + ··· + c₁ x⁰) = -c₀
+  //   => 0 = -c₀
+  //   => c₀ = 0
+  bool hasZero = math::isZero(polynomial.front());
 
   simplifyPolynomial(polynomial);
 

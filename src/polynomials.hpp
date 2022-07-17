@@ -3,12 +3,13 @@
 #include <functional>
 #include <vector>
 #include "constants.hpp"
+#include "math.hpp"
 
 void simplifyPolynomial(std::vector<double>& polynomial) {
-  while (-epsilon < polynomial.front() < epsilon) {
+  while (math::isZero(polynomial.front())) {
     polynomial.erase(polynomial.begin());
   }
-  while (-epsilon < polynomial.back() < epsilon) {
+  while (math::isZero(polynomial.back())) {
     polynomial.erase(polynomial.end());
   }
 }

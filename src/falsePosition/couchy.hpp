@@ -5,6 +5,8 @@
 #include <vector>
 
 namespace falsePosition {
+  // Variations of signs of the polynomial p(x), it is the maximum number
+  // of positive roots.
   int variations(const std::vector<double>& polynomial) {
     int v = 0;
     for (auto i = 0; i < polynomial.size();) {
@@ -17,7 +19,8 @@ namespace falsePosition {
     return v;
   }
 
-  // Variations of the polynomial p(-x)
+  // Variations of signs of the polynomial p(-x), it is the maximum number
+  // of negative roots.
   int negativeVariations(const std::vector<double>& polynomial) {
     int v = 0;
     for (auto i = 0; i < polynomial.size();) {
@@ -45,14 +48,6 @@ namespace falsePosition {
       }
     }
     return biggest;
-  }
-
-  int maximumNumberOfPositiveRoots(const std::vector<double>& polynomial) {
-    return variations(polynomial);
-  }
-
-  int maximumNumberOfNegativeRoots(const std::vector<double>& polynomial) {
-    return negativeVariations(polynomial);
   }
 
   double bound(const std::vector<double>& polynomial) {
